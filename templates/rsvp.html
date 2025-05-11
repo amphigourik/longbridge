@@ -1,0 +1,17 @@
+{{ define "content" }}
+<h2 class="text-2xl font-semibold mb-4">RSVP</h2>
+<form class="space-y-4" method="post" action="#">
+    <div>
+        <label for="name" class="block font-medium">Nom</label>
+        <input type="text" id="name" name="name" required class="w-full border p-2 rounded" />
+    </div>
+    <div>
+        <label for="attending" class="block font-medium">Présence</label>
+        <select id="attending" name="attending" class="w-full border p-2 rounded">
+            <option value="yes">Je serai présent·e</option>
+            <option value="no">Je ne peux pas venir</option>
+        </select>
+    </div>
+    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Envoyer</button>
+</form>
+{{ end }}

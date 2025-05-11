@@ -1,0 +1,10 @@
+.git
+*.log
+*.md
+*.tmp
+
+# Ignore the compiled Go binary
+longbridge
+
+# Ignore the tailwind binary
+tools/tailwindcss
