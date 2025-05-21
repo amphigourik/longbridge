@@ -19,9 +19,10 @@ build-all:
   just css
   just build
 
-# Build Docker image avec docker-compose
+# Build Docker image
 compose-up:
-  docker-compose up --build
+  docker compose down -v
+  docker compose up --build
 
 # Build Docker image
 docker-build:

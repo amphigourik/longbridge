@@ -30,3 +30,6 @@ go.work.sum
 
 # Tailwind binary
 tools/tailwindcss
+
+# DB data
+pgdata/
