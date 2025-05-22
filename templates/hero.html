@@ -1,0 +1,66 @@
+{{ define "content" }}
+<section class="relative min-h-screen flex items-center justify-center bg-gradient-to-br from-pink-50 via-white to-blue-50 overflow-hidden px-6">
+  <!-- Background avec blur -->
+  <div class="absolute inset-0 -z-10">
+    <img src="/static/images/hero-bg.jpg" alt="Mariage" class="w-full h-full object-cover opacity-30 blur-sm" />
+    <div class="absolute inset-0 bg-gradient-to-t from-white/70 via-white/40 to-white/10"></div>
+  </div>
+
+  <!-- Contenu centré avec animation -->
+  <div class="relative max-w-3xl text-center">
+    <h1 class="font-title text-5xl md:text-7xl text-deep-green mb-6 opacity-0 translate-y-6 animate-fade-slide-in">
+      Longpont
+    </h1>
+    <p class="font text-xl md:text-2xl text-light-ivory mb-8 opacity-0 translate-y-6 animate-fade-slide-in delay-100">
+      Nous allons nous dire oui 💍
+    </p>
+    <span class="hidden bg-light-ivory bg-fresh-pink bg-bloom-rose bg-sunny-wasabi bg-deep-green font-title font-body font-name"></span>
+
+    <p class="text-lg mb-12 opacity-0 translate-y-6 animate-fade-slide-in delay-200">
+      Rejoignez-nous le <strong>25 avril 2026</strong> pour une journée inoubliable
+    </p>
+
+    <a href="/rsvp" class="inline-flex items-center dark:bg-lightivory bg-deepgreen hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 text-white text-lg font-semibold py-4 px-8 rounded-lg shadow-lg transition-transform transform hover:scale-105 hover:shadow-xl">
+      Je confirme ma présence
+      <svg xmlns="http://www.w3.org/2000/svg" class="ml-3 h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+
+    <script src="/static/js/countdown.js"></script>
+    <div id="countdown" class="mt-8 text-lg font-semibold text-light-ivory opacity-0 translate-y-6 animate-fade-slide-in delay-300">
+      <span id="days" class="countdown-item"></span> jours
+      <span id="hours" class="countdown-item"></span> heures
+      <span id="minutes" class="countdown-item"></span> minutes
+      <span id="seconds" class="countdown-item"></span> secondes
+
+    </div>
+
+    
+  </div>
+</section>
+
+<!-- Animation keyframes à ajouter dans ton CSS Tailwind (ou dans style global) -->
+<style>
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-in {
+  animation: fadeSlideIn 0.6s ease forwards;
+}
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
+}
+</style>
+{{ end }}

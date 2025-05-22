@@ -28,8 +28,8 @@ go.work.sum
 # env file
 .env
 
-# Tailwind binary
-tools/tailwindcss
-
 # DB data
 pgdata/
+
+# Node modules
+node_modules/

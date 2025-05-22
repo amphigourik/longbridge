@@ -1,13 +1,10 @@
 # Compile le CSS Tailwind (sans Node.js)
 css:
-  tools/tailwindcss \
-    -i ./static/css/tailwind.input.css \
-    -o ./static/css/tailwind.css \
-    --minify
+  npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify
 
 # Compile le CSS Tailwind (sans Node.js) + watch
 watch-css:
-  tools/tailwindcss -i ./static/css/tailwind.input.css -o ./static/css/tailwind.css --watch
+  npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch
 
 
 # Build binaire Go
@@ -18,6 +15,12 @@ build:
 build-all:
   just css
   just build
+
+# Build and run locally
+run:
+  just css
+  just build
+  APP_ENV=development ./longbridge
 
 # Build Docker image
 compose-up:

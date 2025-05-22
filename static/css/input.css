@@ -1,0 +1,190 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+@font-face {
+  font-family: 'The Seasons';
+  src: url('/static/fonts/the-seasons-regular-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Bright Marching';
+  src: url('/static/fonts/bright-marching-regular-webfont.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@theme {
+  --font-title: "The Seasons", serif;
+  --font-logotype: "Bright Marching", cursive;
+  --font-body: "Montserrat", sans-serif;
+  --font-mono: "Courier New", monospace;
+  --font-sans: "Montserrat", sans-serif;
+
+  --color-lightivory: #fffdec;
+  --color-freshpink: #ffe2e2;
+  --color-bloomrose: #ffcfcf;
+  --color-sunnywasabi: #ccd771;
+  --color-deepgreen: #264016;
+}
+
+@layer base {
+  :root {
+    --color-bg: var(--color-lightivory);
+    --color-fg: var(--color-deepgreen);
+  }
+
+  .dark {
+    --color-bg: var(--color-deepgreen);
+    --color-fg: var(--color-lightivory);
+    --color-primary: var(--color-sunnywasabi);
+    --color-secondary: var(--color-freshpink);
+  }
+}
+
+/* Base styles */
+body {
+  font-family: var(--font-body);
+  line-height: 1.6;
+  background-color: var(--color-bg);
+  color: var(--color-fg);
+}
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-title);
+  color: var(--color-fg);
+  background-color: var(--color-bg);
+}
+h1 {
+  font-size: 2.5rem;
+}
+h2 {
+  font-size: 2rem;
+}
+h3 {
+  font-size: 1.75rem;
+}
+h4 {
+  font-size: 1.5rem;
+}
+h5 {
+  font-size: 1.25rem;
+}
+h6 {
+  font-size: 1rem;
+}
+p {
+  margin-bottom: 1rem;
+}
+a {
+  color: var(--color-fg);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  color: var(--color-secondary);
+}
+a:visited {
+  color: var(--color-primary);
+}
+a:active {
+  color: var(--color-secondary);
+}
+ul, ol {
+  margin-left: 2rem;
+}
+ul li, ol li {
+  margin-bottom: 0.5rem;
+}
+blockquote {
+  border-left: 4px solid var(--color-sunnywasabi);
+  padding-left: 1rem;
+  margin: 1rem 0;
+}
+blockquote p {
+  margin: 0;
+}
+/* Button styles */
+button {
+  background-color: var(--color-sunnywasabi);
+  color: var(--color-deepgreen);
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+button:hover {
+  background-color: var(--color-freshpink);
+}
+button:active {
+  background-color: var(--color-bloomrose);
+}
+button:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-sunnywasabi);
+}
+/* Input styles */
+input, textarea {
+  border: 1px solid var(--color-sunnywasabi);
+  padding: 0.5rem;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
+}
+input:focus, textarea:focus {
+  border-color: var(--color-freshpink);
+  outline: none;
+  box-shadow: 0 0 0 2px var(--color-sunnywasabi);
+}
+input[type="checkbox"], input[type="radio"] {
+  margin-right: 0.5rem;
+}
+input[type="checkbox"]:checked, input[type="radio"]:checked {
+  background-color: var(--color-freshpink);
+  border-color: var(--color-freshpink);
+}
+input[type="checkbox"]:checked:focus, input[type="radio"]:checked:focus {
+  box-shadow: 0 0 0 2px var(--color-sunnywasabi);
+}
+/* Table styles */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1rem 0;
+}
+th, td {
+  border: 1px solid var(--color-sunnywasabi);
+  padding: 0.5rem;
+  text-align: left;
+}
+th {
+  background-color: var(--color-freshpink);
+  color: var(--color-deepgreen);
+}
+td {
+  background-color: var(--color-lightivory);
+}
+/* Responsive styles */
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+  h2 {
+    font-size: 1.75rem;
+  }
+  h3 {
+    font-size: 1.5rem;
+  }
+  h4 {
+    font-size: 1.25rem;
+  }
+  h5 {
+    font-size: 1rem;
+  }
+  h6 {
+    font-size: 0.875rem;
+  }
+}

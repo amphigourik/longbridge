@@ -1,8 +1,10 @@
 package main
 
 import (
+	"database/sql"
 	"log"
 	"net/http"
+	"os"
 
 	"github.com/amphigourik/longbridge/internal/db"
 	"github.com/amphigourik/longbridge/internal/handlers"
@@ -10,11 +12,22 @@ import (
 )
 
 func main() {
-	database, err := db.Connect()
-	if err != nil {
-		log.Fatal("Database connection failed:", err)
+	isDev := os.Getenv("APP_ENV") == "development"
+
+	var database *sql.DB
+	var err error
+
+	log.Println(isDev)
+
+	if !isDev {
+		database, err = db.Connect()
+		if err != nil {
+			log.Fatal("Database connection failed:", err)
+		}
+		defer database.Close()
+	} else {
+		log.Println("Running in development mode, skipping database connection.")
 	}
-	defer database.Close()
 
 	r := chi.NewRouter()
 
@@ -23,6 +36,7 @@ func main() {
 
 	r.Get("/", handlers.Home)
 	r.Get("/rsvp", handlers.RSVP)
+	r.Get("/hero", handlers.Hero)
 
 	log.Println("Listening on :8080...")
 	err = http.ListenAndServe(":8080", r)
