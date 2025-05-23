@@ -36,7 +36,6 @@ func main() {
 
 	r.Get("/", handlers.Home)
 	r.Get("/rsvp", handlers.RSVP)
-	r.Get("/hero", handlers.Hero)
 
 	log.Println("Listening on :8080...")
 	err = http.ListenAndServe(":8080", r)

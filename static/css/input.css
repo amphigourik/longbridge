@@ -29,12 +29,15 @@
   --color-bloomrose: #ffcfcf;
   --color-sunnywasabi: #ccd771;
   --color-deepgreen: #264016;
+  --color-royalraspberry: #994455;
 }
 
 @layer base {
   :root {
     --color-bg: var(--color-lightivory);
     --color-fg: var(--color-deepgreen);
+    --color-primary: var(--color-sunnywasabi);
+    --color-secondary: var(--color-royalraspberry);
   }
 
   .dark {
@@ -43,6 +46,27 @@
     --color-primary: var(--color-sunnywasabi);
     --color-secondary: var(--color-freshpink);
   }
+}
+
+@keyframes fadeSlideIn {
+  0% {
+    opacity: 0;
+    transform: translateY(24px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-slide-in {
+  animation: fadeSlideIn 0.6s ease forwards;
+}
+.delay-100 {
+  animation-delay: 0.1s;
+}
+.delay-200 {
+  animation-delay: 0.2s;
 }
 
 /* Base styles */
@@ -55,9 +79,8 @@ body {
 h1, h2, h3, h4, h5, h6 {
   font-family: var(--font-title);
   color: var(--color-fg);
-  background-color: var(--color-bg);
 }
-h1 {
+/* h1 {
   font-size: 2.5rem;
 }
 h2 {
@@ -74,8 +97,8 @@ h5 {
 }
 h6 {
   font-size: 1rem;
-}
-p {
+} */
+/* p {
   margin-bottom: 1rem;
 }
 a {
@@ -106,10 +129,12 @@ blockquote {
 blockquote p {
   margin: 0;
 }
+*/
+
 /* Button styles */
 button {
-  background-color: var(--color-sunnywasabi);
-  color: var(--color-deepgreen);
+  background-color: var(--color-primary);
+  color: var(--color-bg);
   border: none;
   padding: 0.5rem 1rem;
   font-size: 1rem;
@@ -117,16 +142,18 @@ button {
   transition: background-color 0.3s ease;
 }
 button:hover {
-  background-color: var(--color-freshpink);
+  background-color: var(--color-secondary);
 }
 button:active {
   background-color: var(--color-bloomrose);
 }
 button:focus {
   outline: none;
-  box-shadow: 0 0 0 2px var(--color-sunnywasabi);
+  box-shadow: 0 0 0 2px var(--color-primary);
 }
-/* Input styles */
+
+/*
+Input styles
 input, textarea {
   border: 1px solid var(--color-sunnywasabi);
   padding: 0.5rem;
@@ -149,7 +176,8 @@ input[type="checkbox"]:checked, input[type="radio"]:checked {
 input[type="checkbox"]:checked:focus, input[type="radio"]:checked:focus {
   box-shadow: 0 0 0 2px var(--color-sunnywasabi);
 }
-/* Table styles */
+
+Table styles
 table {
   width: 100%;
   border-collapse: collapse;
@@ -167,7 +195,8 @@ th {
 td {
   background-color: var(--color-lightivory);
 }
-/* Responsive styles */
+
+Responsive styles
 @media (max-width: 768px) {
   h1 {
     font-size: 2rem;
@@ -187,4 +216,4 @@ td {
   h6 {
     font-size: 0.875rem;
   }
-}
+} */
