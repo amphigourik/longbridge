@@ -24,8 +24,13 @@ run:
 
 # Build Docker image
 compose-up:
-  docker compose down -v
+  docker compose down
   docker compose up --build
+
+# Stop and remove Docker containers
+compose-reset:
+  docker compose down -v
+  docker volume rm pgdata || true
 
 # Build Docker image
 docker-build:

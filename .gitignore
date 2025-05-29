@@ -33,3 +33,6 @@ pgdata/
 
 # Node modules
 node_modules/
+
+# Other dev information
+devops.md
