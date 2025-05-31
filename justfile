@@ -1,30 +1,46 @@
-# Compile le CSS Tailwind (sans Node.js)
+# Compile CSS
 css:
   npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --minify
 
-# Compile le CSS Tailwind (sans Node.js) + watch
 watch-css:
   npx tailwindcss -i ./static/css/input.css -o ./static/css/output.css --watch
 
-
-# Build binaire Go
+# Go build (local)
 build:
   go build -o longbridge ./cmd/web
 
-# Build binaire Go + CSS
+# Build + CSS
 build-all:
   just css
   just build
 
 # Build and run locally
 run:
-  just css
-  just build
+  just build-all
   APP_ENV=development ./longbridge
 
-# Build Docker image
+# Dev Docker (live reload + DB)
+dev-up:
+  docker compose -f docker-compose.dev.yml up --build
+
+dev-down:
+  docker compose -f docker-compose.dev.yml down
+
+dev-rebuild:
+  docker compose -f docker-compose.dev.yml down
+  docker compose -f docker-compose.dev.yml up --build --force-recreate
+
+dev-migrate:
+  export $(grep -v '^#' .env | xargs) && migrate -path db/migrations -database "$LOCAL_DB_URL" up
+
+dev-rollback:
+  export $(grep -v '^#' .env | xargs) && migrate -path db/migrations -database "$LOCAL_DB_URL" down 1
+
+create-migration name:
+  migrate create -ext sql -dir db/migrations "{{name}}"
+
+# Prod Docker Compose
 compose-up:
-  docker compose down
   docker compose up --build
 
 # Stop and remove Docker containers
@@ -32,7 +48,7 @@ compose-reset:
   docker compose down -v
   docker volume rm pgdata || true
 
-# Build Docker image
+# Build Docker image only
 docker-build:
   docker build -t longbridge-app .
 
@@ -44,3 +60,19 @@ docker-run:
 docker-all:
   just build-all
   just docker-build
+
+# Deploy on server (from SSH)
+deploy:
+  git pull
+  just docker-build
+  docker compose up -d
+  export $(grep -v '^#' .env | xargs) && migrate -path db/migrations -database "$POSTGRES_URL" up
+
+# Format + lint Go
+lint:
+  go fmt ./...
+  go vet ./...
+
+# Help
+help:
+  just --summary

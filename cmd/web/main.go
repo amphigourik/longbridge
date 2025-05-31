@@ -37,6 +37,11 @@ func main() {
 	r.Get("/", handlers.Home)
 	r.Get("/rsvp", handlers.RSVP)
 
+	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
+		w.WriteHeader(http.StatusOK)
+		w.Write([]byte("OK"))
+	})
+
 	log.Println("Listening on :8080...")
 	err = http.ListenAndServe(":8080", r)
 	if err != nil {

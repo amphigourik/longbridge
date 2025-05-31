@@ -36,3 +36,6 @@ node_modules/
 
 # Other dev information
 devops.md
+
+# Temporary files
+tmp/
