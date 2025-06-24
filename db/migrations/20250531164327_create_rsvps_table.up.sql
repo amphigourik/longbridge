@@ -1,0 +1,10 @@
+CREATE TABLE rsvps (
+  id SERIAL PRIMARY KEY,
+  nom VARCHAR(255) NOT NULL,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  presence BOOLEAN NOT NULL,
+  regime_alimentaire TEXT,
+  participation_brunch BOOLEAN DEFAULT FALSE,
+  commentaire TEXT,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);

@@ -1,17 +1,83 @@
 {{ define "content" }}
-<h2 class="text-2xl font-semibold mb-4">RSVP</h2>
-<form class="space-y-4" method="post" action="#">
-    <div>
-        <label for="name" class="block font-medium">Nom</label>
-        <input type="text" id="name" name="name" required class="w-full border p-2 rounded" />
+<h2 class="text-2xl font-semibold mb-6">RSVP</h2>
+<form class="space-y-6 mb-32" method="post" action="#">
+  <div>
+    <label for="name" class="block font-medium mb-1">Nom complet *</label>
+    <input type="text" id="name" name="name" required
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-bloomrose" />
+  </div>
+
+  <div>
+    <label for="email" class="block font-medium mb-1">Email *</label>
+    <input type="email" id="email" name="email" required
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-bloomrose" />
+  </div>
+
+  <div>
+    <label for="attending" class="block font-medium mb-1">Présence *</label>
+    <select id="attending" name="attending" required
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-bloomrose">
+      <option value="">-- Sélectionnez --</option>
+      <option value="yes">Je serai présent·e</option>
+      <option value="no">Je ne peux pas venir</option>
+    </select>
+  </div>
+
+  <div>
+    <label for="diet" class="block font-medium mb-1">Régime alimentaire / Allergies</label>
+    <textarea id="diet" name="diet" rows="3" placeholder="Ex : végétarien, sans gluten, allergies..." 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-bloomrose"></textarea>
+  </div>
+
+  <div>
+    <label class="block font-medium mb-2">Participation au brunch du lendemain</label>
+    <div class="flex items-center space-x-4 form-radio">
+      <label class="inline-flex items-center">
+        <input type="radio" name="brunch" value="yes" checked class="form-radio" />
+        <span class="ml-2">Oui, avec plaisir !</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="brunch" value="no" class="form-radio" />
+        <span class="ml-2">Non, merci</span>
+      </label>
     </div>
-    <div>
-        <label for="attending" class="block font-medium">Présence</label>
-        <select id="attending" name="attending" class="w-full border p-2 rounded">
-            <option value="yes">Je serai présent·e</option>
-            <option value="no">Je ne peux pas venir</option>
-        </select>
+  </div>
+  <div>
+    <label for="gite" class="block font-medium mb-2">
+      Seriez-vous intéressé·e par une chambre dans un des
+      <span class="relative group">
+        <span class="underline cursor-pointer">gîtes de l'Abbaye</span>
+        <!-- Tooltip -->
+        <span class="absolute left-1/2 transform -translate-x-1/2 bottom-full mb-1 w-64 bg-auto text-auto text-xs rounded p-2 shadow-lg opacity-0 group-hover:opacity-100 transition-opacity backdrop-blur-3xl">
+          Les gîtes sont accolés à l'Abbaye. Le nombre de places est limité. <a href="/logement" class="underline text-blue-400">Voir la page logement</a>.
+        </span>
+      </span>
+      réservés pour le mariage ?
+      <span class="block text-sm text-gray-400 mt-2">
+        <strong>Note :</strong> Les chambres sont disponibles uniquement pour 2 nuits obligatoires (du vendredi au dimanche). Une participation de 50€ par nuit et par personne est demandée.
+      </span>
+    </label>
+    <div class="flex items-center space-x-4 form-radio">
+      <label class="inline-flex items-center">
+        <input type="radio" name="gite" value="yes" class="form-radio text-pink-600" />
+        <span class="ml-2">Oui, je suis intéressé·e</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input type="radio" name="gite" value="no" checked class="form-radio text-pink-600" />
+        <span class="ml-2">Non, merci</span>
+      </label>
     </div>
-    <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Envoyer</button>
+  </div>
+
+  
+  <div>
+    <label for="message" class="block font-medium mb-1">Message / Questions (optionnel)</label>
+    <textarea id="message" name="message" rows="4" placeholder="Écris-nous un mot !" 
+      class="w-full border border-gray-300 p-2 rounded focus:outline-none focus:ring-2 focus:ring-bloomrose"></textarea>
+  </div>
+
+  <button type="submit">
+    Envoyer
+  </button>
 </form>
 {{ end }}
