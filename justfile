@@ -64,8 +64,9 @@ docker-all:
 # Deploy on server (from SSH)
 deploy:
   git pull
+  just build-all
   just docker-build
-  docker compose up -d
+  docker compose up -d --force-recreate
   export $(grep -v '^#' .env | xargs) && migrate -path db/migrations -database "$POSTGRES_URL" up
 
 # Format + lint Go
