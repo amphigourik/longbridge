@@ -13,3 +13,7 @@ func Home(w http.ResponseWriter, r *http.Request) {
 func RSVP(w http.ResponseWriter, r *http.Request) {
 	views.RenderTemplate(w, "rsvp.html", nil)
 }
+
+func ThankYou(w http.ResponseWriter, r *http.Request) {
+	views.RenderTemplate(w, "thankyou.html", nil)
+}

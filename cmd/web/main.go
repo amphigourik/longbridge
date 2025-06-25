@@ -37,6 +37,9 @@ func main() {
 	r.Get("/", handlers.Home)
 	r.Get("/rsvp", handlers.RSVP)
 
+	r.Post("/rsvp", handlers.RSVPPostHandler(database))
+	r.Get("/ty", handlers.ThankYou)
+
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("OK"))

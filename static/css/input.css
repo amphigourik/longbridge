@@ -288,3 +288,67 @@ Responsive styles
     font-size: 0.875rem;
   }
 } */
+
+.thank-you-button {
+	position: relative;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: center;
+  justify-self: center  ;
+  width: auto;
+  max-width: 384px;
+	margin-top: 25px auto;
+	padding: 7px 17px;
+	cursor: pointer;
+	border-radius: 4px;
+	overflow: hidden;
+	z-index: 1;
+}
+
+.thank-you-button::after {
+	position: absolute;
+	right: calc(100% + 1px);
+	bottom: 0;
+	width: 100%;
+	height: 100%;
+	background-color: var(--color-bg);
+	border-radius: 4px;
+	transition: all 0.3s ease;
+	z-index: -1;
+	content: "";
+}
+
+.thank-you-button:hover::after {
+	right: 0;
+	transition: all 0.3s ease;
+}
+
+
+.thank-you-button em {
+	color: var(--color-deepgreen);
+	font-weight: 500;
+	margin-right: 10px;
+}
+
+.thank-you-button i {
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	justify-content: space-between;
+	color: var(--color-deepgreen);
+	position: relative;
+	top: 1px;
+	transition: all 0.3s ease;
+}
+
+.thank-you-button:hover i {
+	margin-left: 10px;
+	transition: all 0.3s ease;
+  color: var(--color-fg);
+}
+
+.thank-you-button:hover em {
+  color: var(--color-fg);
+  transition: all 0.3s ease;
+}
