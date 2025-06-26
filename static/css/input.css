@@ -352,3 +352,14 @@ Responsive styles
   color: var(--color-fg);
   transition: all 0.3s ease;
 }
+
+.addeventatc_dropdown {
+  background-color: transparent;
+  color: var(--color-fg);
+  backdrop-filter: blur(20px);
+}
+
+.location-svg:hover {
+  fill: var(--color-fg);
+  transition: fill 0.9s ease;
+}

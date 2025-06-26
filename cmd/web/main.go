@@ -36,9 +36,11 @@ func main() {
 
 	r.Get("/", handlers.Home)
 	r.Get("/rsvp", handlers.RSVP)
-
 	r.Post("/rsvp", handlers.RSVPPostHandler(database))
 	r.Get("/ty", handlers.ThankYou)
+
+	r.Get("/infos", handlers.Info)
+	r.Get("/programme", handlers.Agenda)
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
