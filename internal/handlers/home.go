@@ -25,3 +25,7 @@ func RSVP(w http.ResponseWriter, r *http.Request) {
 func ThankYou(w http.ResponseWriter, r *http.Request) {
 	views.RenderTemplate(w, "thankyou.html", nil)
 }
+
+func Contact(w http.ResponseWriter, r *http.Request) {
+	views.RenderTemplate(w, "contact.html", nil)
+}
