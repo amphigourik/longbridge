@@ -61,10 +61,14 @@ docker-all:
   just build-all
   just docker-build
 
+  # just build && just compose-up
+
+  
+
 # Deploy on server (from SSH)
+# docker build -t longbridge-app . --no-cache?
 deploy:
   git pull
-  just build-all
   just docker-build
   docker compose up -d --force-recreate
   export $(grep -v '^#' .env | xargs) && migrate -path db/migrations -database "$POSTGRES_URL" up

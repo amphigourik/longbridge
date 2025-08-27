@@ -25,6 +25,8 @@ func RSVPPostHandler(db *sql.DB) http.HandlerFunc {
 		gite := r.FormValue("gite")
 		message := r.FormValue("message")
 
+		// No duplicate email check
+
 		if name == "" || email == "" || attending == "" || brunch == "" || gite == "" {
 			http.Error(w, "Missing required fields", http.StatusBadRequest)
 			return
