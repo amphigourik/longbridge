@@ -69,8 +69,7 @@ docker-all:
 # docker build -t longbridge-app . --no-cache?
 deploy:
   git pull
-  just docker-build
-  docker compose up -d --force-recreate
+  docker compose up -d --build --force-recreate
   export $(grep -v '^#' .env | xargs) && migrate -path db/migrations -database "$POSTGRES_URL" up
 
 # Format + lint Go
