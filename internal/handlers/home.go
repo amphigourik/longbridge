@@ -18,13 +18,21 @@ func Agenda(w http.ResponseWriter, r *http.Request) {
 	views.RenderTemplate(w, "agenda.html", nil)
 }
 
-func RSVP(w http.ResponseWriter, r *http.Request) {
-	views.RenderTemplate(w, "rsvp.html", nil)
+func Cagnotte(w http.ResponseWriter, r *http.Request) {
+	views.RenderTemplate(w, "cagnotte.html", nil)
 }
 
-func ThankYou(w http.ResponseWriter, r *http.Request) {
-	views.RenderTemplate(w, "thankyou.html", nil)
+func Photos(w http.ResponseWriter, r *http.Request) {
+	views.RenderTemplate(w, "photos.html", nil)
 }
+
+// func RSVP(w http.ResponseWriter, r *http.Request) {
+// 	views.RenderTemplate(w, "rsvp.html", nil)
+// }
+
+// func ThankYou(w http.ResponseWriter, r *http.Request) {
+// 	views.RenderTemplate(w, "thankyou.html", nil)
+// }
 
 func Contact(w http.ResponseWriter, r *http.Request) {
 	views.RenderTemplate(w, "contact.html", nil)

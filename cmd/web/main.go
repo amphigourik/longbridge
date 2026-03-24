@@ -35,13 +35,15 @@ func main() {
 	r.Handle("/static/*", http.StripPrefix("/static/", fs))
 
 	r.Get("/", handlers.Home)
-	r.Get("/rsvp", handlers.RSVP)
-	r.Post("/rsvp", handlers.RSVPPostHandler(database))
-	r.Get("/merci", handlers.ThankYou)
+	// r.Get("/rsvp", handlers.RSVP)
+	// r.Post("/rsvp", handlers.RSVPPostHandler(database))
+	// r.Get("/merci", handlers.ThankYou)
 
 	r.Get("/infos", handlers.Info)
 	r.Get("/programme", handlers.Agenda)
 	r.Get("/contact", handlers.Contact)
+	r.Get("/cagnotte", handlers.Cagnotte)
+	r.Get("/photos", handlers.Photos)
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
