@@ -14,6 +14,10 @@ func Info(w http.ResponseWriter, r *http.Request) {
 	views.RenderTemplate(w, "infos.html", nil)
 }
 
+func Prestataires(w http.ResponseWriter, r *http.Request) {
+	views.RenderTemplate(w, "prestataires.html", nil)
+}
+
 func Agenda(w http.ResponseWriter, r *http.Request) {
 	views.RenderTemplate(w, "agenda.html", nil)
 }

@@ -39,7 +39,8 @@ func main() {
 	// r.Post("/rsvp", handlers.RSVPPostHandler(database))
 	// r.Get("/merci", handlers.ThankYou)
 
-	r.Get("/infos", handlers.Info)
+	// r.Get("/infos", handlers.Info)
+	r.Get("/prestataires", handlers.Prestataires)
 	// r.Get("/programme", handlers.Agenda)
 	// r.Get("/contact", handlers.Contact)
 	// r.Get("/cagnotte", handlers.Cagnotte)
