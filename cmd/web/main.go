@@ -40,7 +40,7 @@ func main() {
 	// r.Get("/merci", handlers.ThankYou)
 
 	r.Get("/infos", handlers.Info)
-	r.Get("/programme", handlers.Agenda)
+	// r.Get("/programme", handlers.Agenda)
 	// r.Get("/contact", handlers.Contact)
 	// r.Get("/cagnotte", handlers.Cagnotte)
 	r.Get("/repondeur", handlers.Repondeur)
