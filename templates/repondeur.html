@@ -1,0 +1,149 @@
+{{ define "content" }}
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+  <div class="flex flex-col items-center pb-8">
+    <h1 class="font-title text-4xl text-center mb-2">Répondeur</h1>
+    <div class="flex justify-center w-6 border border-bloomrose mb-4"></div>
+    <p class="font-mono text-sm text-center tracking-widest uppercase opacity-60">
+      📼 Vous avez 7 nouveaux messages
+    </p>
+  </div>
+
+  <div class="flex flex-col gap-6">
+
+    <div class="rounded-xl p-5 shadow-sm border border-(--color-bloomrose) bg-(--color-freshpink)/30">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-mono text-xs uppercase tracking-widest opacity-50">Message 01</span>
+        <span class="font-mono text-xs opacity-40">reçu à 01h31</span>
+      </div>
+      <audio controls class="w-full" src="/static/audio/record_20260426_013159.wav"></audio>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border border-(--color-bloomrose) bg-(--color-freshpink)/30">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-mono text-xs uppercase tracking-widest opacity-50">Message 02</span>
+        <span class="font-mono text-xs opacity-40">reçu à 01h50</span>
+      </div>
+      <audio controls class="w-full" src="/static/audio/record_20260426_015046.wav"></audio>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border border-(--color-bloomrose) bg-(--color-freshpink)/30">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-mono text-xs uppercase tracking-widest opacity-50">Message 03</span>
+        <span class="font-mono text-xs opacity-40">reçu à 03h13</span>
+      </div>
+      <audio controls class="w-full" src="/static/audio/record_20260426_031322.wav"></audio>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border border-(--color-bloomrose) bg-(--color-freshpink)/30">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-mono text-xs uppercase tracking-widest opacity-50">Message 04</span>
+        <span class="font-mono text-xs opacity-40">reçu à 03h15</span>
+      </div>
+      <audio controls class="w-full" src="/static/audio/record_20260426_031532.wav"></audio>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border border-(--color-bloomrose) bg-(--color-freshpink)/30">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-mono text-xs uppercase tracking-widest opacity-50">Message 05</span>
+        <span class="font-mono text-xs opacity-40">reçu à 03h16</span>
+      </div>
+      <audio controls class="w-full" src="/static/audio/record_20260426_031646.wav"></audio>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border border-(--color-bloomrose) bg-(--color-freshpink)/30">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-mono text-xs uppercase tracking-widest opacity-50">Message 06</span>
+        <span class="font-mono text-xs opacity-40">reçu à 03h18</span>
+      </div>
+      <audio controls class="w-full" src="/static/audio/record_20260426_031853.wav"></audio>
+    </div>
+
+    <div class="rounded-xl p-5 shadow-sm border border-(--color-bloomrose) bg-(--color-freshpink)/30">
+      <div class="flex items-center justify-between mb-3">
+        <span class="font-mono text-xs uppercase tracking-widest opacity-50">Message 07</span>
+        <span class="font-mono text-xs opacity-40">reçu à 03h20</span>
+      </div>
+      <audio controls class="w-full" src="/static/audio/record_20260426_032010.wav" id="message07"></audio>
+    </div>
+
+  </div>
+</div>
+
+<!-- Easter egg Praline -->
+<div id="praline-overlay" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;">
+  <canvas id="confetti-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:10000;"></canvas>
+  <div style="position:relative;z-index:10001;background:white;border:6px solid;border-image:linear-gradient(90deg,red,orange,yellow,green,blue,purple) 1;max-width:380px;width:90%;text-align:center;padding:2rem;font-family:'Comic Sans MS',cursive;box-shadow:0 0 40px 10px gold;animation:shake 0.5s infinite alternate;">
+    <div style="font-size:2rem;margin-bottom:0.5rem;">🎉🎊🏆🎊🎉</div>
+    <div style="font-size:1.3rem;font-weight:900;color:#cc0000;text-transform:uppercase;letter-spacing:1px;margin-bottom:1rem;">Félicitations !<br>Vous êtes le grand gagnant !</div>
+    <img src="/static/images/photos/praline.png" alt="Praline" style="width:180px;height:180px;object-fit:cover;border-radius:50%;border:5px solid gold;margin:0 auto 1rem;display:block;"/>
+    <div style="font-size:1rem;color:#333;margin-bottom:1.5rem;">Vous avez gagné <strong>1 million de pins</strong> à l'effigie de <strong style="color:#cc0000;font-size:1.2rem;">PRALINE</strong> 🐱</div>
+    <a href="https://www.ville-nogentlerotrou.fr/" target="_blank" onclick="closePraline()" style="display:inline-block;background:linear-gradient(90deg,#ff6600,#ffcc00);border:none;padding:0.75rem 2rem;font-size:1rem;font-weight:900;font-family:'Comic Sans MS',cursive;cursor:pointer;border-radius:4px;box-shadow:0 4px 0 #cc6600;text-transform:uppercase;text-decoration:none;color:black;">Réclamer mon lot →</a>
+    <div style="font-size:0.6rem;color:#aaa;margin-top:0.75rem;">*Offre non remboursable. Pins disponibles sous 4 à 6 ans.</div>
+  </div>
+</div>
+
+<style>
+@keyframes shake {
+  from { transform: rotate(-1deg) scale(1.01); }
+  to   { transform: rotate(1deg) scale(1.02); }
+}
+</style>
+
+<script>
+document.getElementById('message07').addEventListener('timeupdate', function() {
+  if (this.dataset.easterEggShown) return;
+  if (this.currentTime >= 60) {
+    this.dataset.easterEggShown = '1';
+    document.getElementById('praline-overlay').style.display = 'flex';
+    startConfetti();
+  }
+});
+
+function closePraline() {
+  document.getElementById('praline-overlay').style.display = 'none';
+  stopConfetti();
+}
+
+let confettiAnim;
+const colors = ['#ff6600','#ffcc00','#ff0055','#00ccff','#cc00ff','#00ff88'];
+
+function startConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const ctx = canvas.getContext('2d');
+  const pieces = Array.from({length: 120}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * -canvas.height,
+    r: Math.random() * 8 + 4,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    speed: Math.random() * 3 + 2,
+    swing: Math.random() * 2 - 1,
+    angle: Math.random() * Math.PI * 2,
+  }));
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.angle);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.r/2, -p.r/2, p.r, p.r * 0.6);
+      ctx.restore();
+      p.y += p.speed;
+      p.x += p.swing;
+      p.angle += 0.05;
+      if (p.y > canvas.height) { p.y = -10; p.x = Math.random() * canvas.width; }
+    });
+    confettiAnim = requestAnimationFrame(draw);
+  }
+  draw();
+}
+
+function stopConfetti() {
+  cancelAnimationFrame(confettiAnim);
+  const canvas = document.getElementById('confetti-canvas');
+  canvas.getContext('2d').clearRect(0, 0, canvas.width, canvas.height);
+}
+</script>
+{{ end }}

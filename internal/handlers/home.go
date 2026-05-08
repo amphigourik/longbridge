@@ -26,6 +26,10 @@ func Photos(w http.ResponseWriter, r *http.Request) {
 	views.RenderTemplate(w, "photos.html", nil)
 }
 
+func Repondeur(w http.ResponseWriter, r *http.Request) {
+	views.RenderTemplate(w, "repondeur.html", nil)
+}
+
 // func RSVP(w http.ResponseWriter, r *http.Request) {
 // 	views.RenderTemplate(w, "rsvp.html", nil)
 // }

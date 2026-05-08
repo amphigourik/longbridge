@@ -43,6 +43,7 @@ func main() {
 	r.Get("/programme", handlers.Agenda)
 	// r.Get("/contact", handlers.Contact)
 	// r.Get("/cagnotte", handlers.Cagnotte)
+	r.Get("/repondeur", handlers.Repondeur)
 	r.Get("/photos", handlers.Photos)
 
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
