@@ -1,0 +1,132 @@
+{{ define "content" }}
+<div class="container mx-auto px-4 py-8 max-w-2xl">
+
+  <!-- Header -->
+  <div class="flex flex-col items-center pb-8">
+    <h1 class="font-title text-4xl text-center mb-2">Upload photos</h1>
+    <div class="flex justify-center w-6 border border-bloomrose mb-4"></div>
+    <p class="text-sm opacity-60">Glisse tes fichiers ou clique pour les sélectionner.</p>
+  </div>
+
+  <!-- Drop zone -->
+  <div id="dropzone"
+    class="w-full border-2 border-dashed border-gray-300 rounded-2xl p-10 text-center cursor-pointer hover:border-gray-400 transition mb-6">
+    <svg class="mx-auto mb-4 w-10 h-10 opacity-40" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M3 16.5v2.25A2.25 2.25 0 005.25 21h13.5A2.25 2.25 0 0021 18.75V16.5m-13.5-9L12 3m0 0l4.5 4.5M12 3v13.5" />
+    </svg>
+    <p class="text-sm opacity-60">Dépose tes fichiers ici</p>
+    <p class="text-xs opacity-40 mt-1">ou</p>
+    <label class="mt-4 inline-flex items-center gap-2 font-semibold py-3 px-6 rounded-lg shadow-md transition-transform transform hover:scale-105 hover:shadow-xl cursor-pointer">
+      Choisir des fichiers
+      <input id="fileinput" type="file" multiple class="hidden" />
+    </label>
+  </div>
+
+  <!-- Compteur -->
+  <div id="counter" class="text-sm opacity-60 text-center mb-4 hidden">
+    <span id="done-count">0</span> / <span id="total-count">0</span> fichiers envoyés
+  </div>
+
+  <!-- Liste fichiers -->
+  <div id="filelist" class="space-y-2"></div>
+
+</div>
+
+<script>
+  const MAX_CONCURRENT = 4;
+  let queue = [];
+  let active = 0;
+  let doneCount = 0;
+  let totalCount = 0;
+
+  const dropzone = document.getElementById('dropzone');
+  const fileinput = document.getElementById('fileinput');
+  const filelist  = document.getElementById('filelist');
+  const counter   = document.getElementById('counter');
+
+  dropzone.addEventListener('dragover', e => { e.preventDefault(); dropzone.classList.add('border-gray-500'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-gray-500'));
+  dropzone.addEventListener('drop', e => {
+    e.preventDefault();
+    dropzone.classList.remove('border-gray-500');
+    addFiles(Array.from(e.dataTransfer.files));
+  });
+  fileinput.addEventListener('change', () => addFiles(Array.from(fileinput.files)));
+
+  function addFiles(files) {
+    totalCount += files.length;
+    counter.classList.remove('hidden');
+    updateCounter();
+    files.forEach(f => { queue.push(f); renderRow(f); });
+    drain();
+  }
+
+  function drain() {
+    while (active < MAX_CONCURRENT && queue.length > 0) uploadFile(queue.shift());
+  }
+
+  function renderRow(file) {
+    const row = document.createElement('div');
+    row.className = 'rounded-xl px-4 py-3 shadow-sm flex flex-col gap-1 border border-gray-100';
+    row.innerHTML = `
+      <div class="flex justify-between items-center text-sm">
+        <span class="truncate opacity-80 max-w-xs">${file.name}</span>
+        <span id="status-${CSS.escape(file.name)}" class="opacity-40 ml-2 shrink-0">En attente</span>
+      </div>
+      <div class="w-full bg-gray-100 rounded-full h-1.5">
+        <div id="bar-${CSS.escape(file.name)}" class="bg-gray-400 h-1.5 rounded-full transition-all" style="width:0%"></div>
+      </div>`;
+    filelist.appendChild(row);
+  }
+
+  function setProgress(name, pct) {
+    const bar = document.getElementById('bar-' + CSS.escape(name));
+    if (bar) bar.style.width = pct + '%';
+  }
+
+  function setStatus(name, state) {
+    const el  = document.getElementById('status-' + CSS.escape(name));
+    const bar = document.getElementById('bar-'    + CSS.escape(name));
+    if (!el) return;
+    const map = {
+      uploading: ['En cours…',      'opacity-60'],
+      done:      ['✓ Envoyé',       'text-green-600 opacity-100'],
+      skipped:   ['↩ Déjà envoyé', 'text-yellow-600 opacity-100'],
+      error:     ['✗ Erreur',       'text-red-500 opacity-100'],
+    };
+    const [label, cls] = map[state] || ['', ''];
+    el.textContent = label;
+    el.className = 'ml-2 shrink-0 text-sm ' + cls;
+    if (state === 'done' || state === 'skipped') { bar.classList.replace('bg-gray-400', 'bg-green-500'); bar.style.width = '100%'; }
+    if (state === 'error') bar.classList.replace('bg-gray-400', 'bg-red-400');
+  }
+
+  function updateCounter() {
+    document.getElementById('done-count').textContent = doneCount;
+    document.getElementById('total-count').textContent = totalCount;
+  }
+
+  function uploadFile(file) {
+    active++;
+    setStatus(file.name, 'uploading');
+    const fd  = new FormData();
+    fd.append('file', file);
+    const xhr = new XMLHttpRequest();
+    xhr.upload.addEventListener('progress', e => {
+      if (e.lengthComputable) setProgress(file.name, Math.round(e.loaded / e.total * 100));
+    });
+    xhr.addEventListener('load', () => {
+      active--; doneCount++;
+      try {
+        const res = JSON.parse(xhr.responseText);
+        setStatus(file.name, res.ok ? (res.skipped ? 'skipped' : 'done') : 'error');
+      } catch { setStatus(file.name, 'error'); }
+      updateCounter();
+      drain();
+    });
+    xhr.addEventListener('error', () => { active--; setStatus(file.name, 'error'); drain(); });
+    xhr.open('POST', '/upload/chloeartieres');
+    xhr.send(fd);
+  }
+</script>
+{{ end }}

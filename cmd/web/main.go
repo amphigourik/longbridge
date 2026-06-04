@@ -47,6 +47,9 @@ func main() {
 	r.Get("/repondeur", handlers.Repondeur)
 	r.Get("/photos", handlers.Photos)
 
+	r.Get("/upload/chloeartieres", handlers.UploadPage)
+	r.Post("/upload/chloeartieres", handlers.UploadFile)
+
 	r.Get("/health", func(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte("OK"))
