@@ -28,39 +28,69 @@ func UploadPage(w http.ResponseWriter, r *http.Request) {
 }
 
 func UploadFile(w http.ResponseWriter, r *http.Request) {
-	file, header, err := r.FormFile("file")
-	if err != nil {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusBadRequest)
-		json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "no file"})
-		return
-	}
-	defer file.Close()
-
-	destPath := filepath.Join(uploadDir(), filepath.Base(header.Filename))
-
-	if _, err := os.Stat(destPath); err == nil {
-		w.Header().Set("Content-Type", "application/json")
-		json.NewEncoder(w).Encode(uploadResponse{OK: true, Skipped: true})
-		return
-	}
-
-	dest, err := os.Create(destPath)
-	if err != nil {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "cannot create file"})
-		return
-	}
-	defer dest.Close()
-
-	if _, err := io.Copy(dest, file); err != nil {
-		w.Header().Set("Content-Type", "application/json")
-		w.WriteHeader(http.StatusInternalServerError)
-		json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "write failed"})
-		return
-	}
-
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(uploadResponse{OK: true})
+
+	mr, err := r.MultipartReader()
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "invalid multipart"})
+		return
+	}
+
+	for {
+		part, err := mr.NextPart()
+		if err == io.EOF {
+			break
+		}
+		if err != nil {
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "read error"})
+			return
+		}
+		if part.FormName() != "file" {
+			part.Close()
+			continue
+		}
+
+		filename := filepath.Base(part.FileName())
+		if filename == "" || filename == "." {
+			part.Close()
+			w.WriteHeader(http.StatusBadRequest)
+			json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "no filename"})
+			return
+		}
+
+		destPath := filepath.Join(uploadDir(), filename)
+
+		if _, err := os.Stat(destPath); err == nil {
+			part.Close()
+			json.NewEncoder(w).Encode(uploadResponse{OK: true, Skipped: true})
+			return
+		}
+
+		dest, err := os.Create(destPath)
+		if err != nil {
+			part.Close()
+			w.WriteHeader(http.StatusInternalServerError)
+			json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "cannot create file"})
+			return
+		}
+
+		if _, err := io.Copy(dest, part); err != nil {
+			dest.Close()
+			part.Close()
+			os.Remove(destPath)
+			w.WriteHeader(http.StatusInternalServerError)
+			json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "write failed"})
+			return
+		}
+
+		dest.Close()
+		part.Close()
+		json.NewEncoder(w).Encode(uploadResponse{OK: true})
+		return
+	}
+
+	w.WriteHeader(http.StatusBadRequest)
+	json.NewEncoder(w).Encode(uploadResponse{OK: false, Error: "no file"})
 }
