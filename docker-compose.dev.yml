@@ -7,7 +7,7 @@ services:
       - .:/app
       - air_config:/root/.air
     ports:
-      - "8080:8080"
+      - "127.0.0.1:8080:8080"
     depends_on:
       - db
     env_file:
@@ -17,7 +17,7 @@ services:
   db:
     image: postgres:16
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     env_file:
       - .env
     volumes:
